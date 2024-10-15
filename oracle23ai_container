@@ -1,0 +1,39 @@
+--Link Oracle 23ai Docker:
+https://www.oracle.com/my/database/free/get-started/
+
+# Extraia imagens de contêiner diretamente do Container Registry da Oracle via:
+Pull container images straight from Oracle’s Container Registry via docker pull container-registry.oracle.com/database/free:latest
+
+# Verifique se a imagem foi baixada corretamente:
+docker images
+
+# Verifique se o contêiner está em execução (status):
+docker ps -a
+
+# Criar e rodar o contêiner: Use o comando abaixo para iniciar o contêiner com a imagem do Oracle Database. Certifique-se de ajustar as variáveis de ambiente e portas conforme necessário:
+docker run -d -p 1521:1521 -p 5500:5500 \
+--name oracle-db23ai \
+-e ORACLE_PWD=<your_password> \
+container-registry.oracle.com/database/free:latest
+ ↓ ↓ ↓ 
+## Explicação dos parâmetros:
+-d: Roda o contêiner em segundo plano (modo "detached").
+-p 1521:1521: Mapeia a porta 1521 (porta padrão do Oracle para conexões SQL*Net).
+-p 5500:5500: Mapeia a porta 5500 (usada pelo Oracle Enterprise Manager).
+--name oracle-db23ai: Dá um nome ao contêiner, facilitando a manipulação.
+-e ORACLE_PWD=<your_password>: Define a senha para o usuário SYS e SYSTEM no banco de dados. (Eu coloquei oracle)
+
+# Start docker:
+docker start oracle-db23ai
+
+# CDB:
+Verificar os PDBs Disponíveis: Se você quiser verificar a lista de PDBs disponíveis e seus estados, você pode se conectar ao CDB primeiro e depois listar os PDBs:
+docker exec -it oracle-db23ai sqlplus sys/oracle@localhost:1521/FREE as sysdba
+
+# PDB é XEPDB1. Tente o seguinte comando:
+docker exec -it oracle-db23ai sqlplus sys/oracle@localhost:1521/FREEPDB1 as sysdba
+
+## Para acessar o contêiner do Oracle Database 23c no Docker e operar como o usuário oracle, utilize o seguinte comando:
+docker exec -it oracle-db23ai bash
+
+
