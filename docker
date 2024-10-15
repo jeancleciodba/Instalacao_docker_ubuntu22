@@ -101,4 +101,6 @@ TriggeredBy: ● docker.socket
              ├─129352 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 1234 -container-ip 172.18.0.3 -c>
              └─129357 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 1234 -container-ip 172.18.0.3 -contai>
 			 
-#Com isso finalizamos a instalação com sucesso.			 
+#Com isso finalizamos a instalação com sucesso.		
+#Fonte original:
+github.com/dbasincero/Docker
