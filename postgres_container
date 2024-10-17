@@ -1,0 +1,34 @@
+#Passo a Passo para Configurar PostgreSQL com Docker
+--Baixar a imagem do PostgreSQL:
+
+docker pull postgres
+
+# Crie e inicie o contêiner PostgreSQL com o nome Postgres_DB, definindo uma senha para o usuário postgres e mapeando a porta 5432 do host para o contêiner:
+
+docker run --name Postgres_DB -e POSTGRES_PASSWORD=senha -p 5432:5432 -d postgres
+
+# Confirme que o contêiner está em execução:
+
+docker ps
+
+# Acesse o banco de dados PostgreSQL usando o cliente psql dentro do contêiner:
+
+docker exec -it Postgres_DB psql -U postgres
+
+# Permitir conexões remotas no PostgreSQL (opcional)
+--Para habilitar o acesso remoto ao PostgreSQL, é necessário ajustar as configurações:
+--Editar o arquivo pg_hba.conf para permitir conexões externas:
+
+# Acessar o bash:
+docker exec -it Postgres_DB bash
+echo "host all all 0.0.0.0/0 md5" >> /var/lib/postgresql/data/pg_hba.conf
+
+# Configurar o PostgreSQL para escutar em todas as interfaces no arquivo postgresql.conf:
+sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /var/lib/postgresql/data/postgresql.conf
+
+# Reiniciar o contêiner para aplicar as alterações:
+docker restart Postgres_DB
+
+--Conectar-se via pgAdmin ou outra ferramenta
+--Agora que o PostgreSQL está configurado, você pode usar ferramentas como o pgAdmin para se conectar ao banco de dados. Utilize o IP da máquina onde o Docker está rodando (por exemplo, 192.168.1.74), porta 5432, e as credenciais configuradas (usuário postgres e a senha definida).
+--Este fluxo cobre o processo de configuração de maneira direta, sem repetições, e com foco nas melhores práticas.
