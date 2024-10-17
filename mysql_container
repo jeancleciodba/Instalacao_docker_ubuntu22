@@ -1,0 +1,20 @@
+# Cria o Contêiner no docker:
+docker run --name Mysql_DB -p 3606:3306 -e MYSQL_ROOT_PASSWORD=senha -d mariadb:latest
+
+# Verifique se o contêiner está rodando:
+docker ps
+
+# Acesse o Mysql_DB:
+docker exec -it Mysql_DB mariadb -u root -psenha
+
+# Acessar o bash:
+docker exec -it Mysql_DB bash
+
+# Instalação direto no Ubuntu-Server:
+sudo apt install mysql-server
+
+sudo systemctl status mysql
+
+mysql -u root -pG@171290
+
+--Obs: Não consegui conectar no Dbeaver, quem quiser contribuir, favor comentar.
