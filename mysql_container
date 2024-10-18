@@ -1,4 +1,4 @@
-# Cria o Contêiner no docker:
+#01- Cria o Contêiner no docker:
 docker run --name Mysql_DB -p 3606:3306 -e MYSQL_ROOT_PASSWORD=senha -d mariadb:latest
 
 # Verifique se o contêiner está rodando:
@@ -10,11 +10,23 @@ docker exec -it Mysql_DB mariadb -u root -psenha
 # Acessar o bash:
 docker exec -it Mysql_DB bash
 
-# Instalação direto no Ubuntu-Server:
+---------------------------------------------------------------
+#02- Instalação direto no Ubuntu-Server:
 sudo apt install mysql-server
 
 sudo systemctl status mysql
 
 mysql -u root -pG@171290
 
---Obs: Não consegui conectar no Dbeaver, quem quiser contribuir, favor comentar.
+# Configurar MySQL para Aceitar Conexões Remotas
+--sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+-- vi /etc/mysql/mysql.conf.d/mysqld.cnf
+-- Localize a linha bind-address e mude para:
+bind-address = 0.0.0.0
+
+# Reiniciar o MySQL:
+sudo systemctl restart mysql
+
+# Verifique as Regras de Firewall:
+sudo ufw allow 3306
+
